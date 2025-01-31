@@ -1,24 +1,21 @@
 {
   "expo": {
-    "name": "Match-Royale",
-    "slug": "match-royale",
-    "version": "1.2",
+    "name": "StickerSmash",
+    "slug": "StickerSmash",
+    "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/_logo.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.jag.matchroyale",
-      "buildNumber": "3"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.jag.matchroyale"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -30,23 +27,15 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splashscreen.jpg",
+          "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
-          "resizeMode": "contain"
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
         }
-      ],
-      "expo-font"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "73feea08-0640-4965-81dc-bca11171119d"
-      }
     }
   }
 }

@@ -1,74 +1,111 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { app, auth, db } from './firebaseconfig';  // Ensure this import happens before using Firebase services
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Text, View, StyleSheet, Image, ImageBackground } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { useFonts } from 'expo-font'; // Import font loading hook
+import '../firebaseconfig.js';
+import Button from 'components/Button.tsx';
+import ImageViewer from '@/components/ImageViewer';
+// Register the root component with Expo
+import { registerRootComponent } from 'expo';
+registerRootComponent(Index);
 
-export default function HomeScreen() {
+import { AppRegistry, Platform } from 'react-native';
+import App from 'app';
+
+
+
+// Correctly import the image
+const HomeImage = require('../home-image1.jpg'); // Correct path to the image
+const LogoImage = require('../logo.png'); // Correct path to logo image
+
+export default function Index() {
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
+
+  // Function to pick an image
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      // Ensure the URI is handled correctly
+      const imageUri = result.assets[0].uri;
+      setSelectedImage(imageUri);
+    }
+  };
+
+  // Load the Prince Valiant font
+  const [fontsLoaded] = useFonts({
+    'PrinceValiant': require('../../assets/fonts/PrinceValiant.ttf'), // Adjust path to font file
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>; // Display a loading text until fonts are loaded
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <ImageBackground source={HomeImage} style={styles.backgroundImage} imageStyle={styles.image}>
+      <View style={styles.brightnessOverlay} />
+      <View style={styles.overlay}>
+        {/* Title with "Match Royale" text */}
+        <Text style={styles.title}>Match Royale</Text>
+
+        {/* Semi-transparent logo underneath the title */}
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={LogoImage} // Correct relative path to logo image
+          style={styles.logo}
+          resizeMode="contain" // Ensures the logo maintains its aspect ratio
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+
+        {/* Dynamic Image Picker Example */}
+        {selectedImage && (
+          <Image source={{ uri: selectedImage }} style={{ width: 200, height: 200 }} />
+        )}
+
+        <Button title="Pick an Image" onPress={pickImageAsync} />
+      </View>
+    </ImageBackground>
   );
 }
 
+
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  backgroundImage: {
+    flex: 1,
+    justifyContent: 'center',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  image: {
+    resizeMode: 'cover',
     position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  brightnessOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Adjust the opacity to make the image brighter
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 48, // Larger font size for the title
+    fontFamily: 'PrinceValiant', // Apply the Prince Valiant font
+    fontWeight: 'bold', // Optional for extra boldness
+    color: '#fff', // White color for the title text
+    marginBottom: 20, // Space between title and logo
+  },
+  logo: {
+    width: 200, // Adjust width for logo size
+    height: 200, // Adjust height for logo size
+    opacity: 0.7, // Semi-transparent logo
+    marginTop: 20, // Space between title and logo
   },
 });
