@@ -1,0 +1,5 @@
+title: My App Support Site
+description: Support site for My App
+baseurl: "/match--royale"
+url: "https://jagman11.github.io"  # replace with your GitHub username
+theme: jekyll-theme-minimal  # Optional: You can use a default theme or choose another one
