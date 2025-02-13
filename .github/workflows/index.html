@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to My App Support Site</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jekyll-theme-minimal@1.0.0/dist/style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to My App Support Site</h1>
+    <p>Find help, FAQs, and contact information here.</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#help">Help</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="help">
+    <h2>Help</h2>
+    <p>If you need help with My App, check out the resources below:</p>
+    <ul>
+      <li><a href="#">Getting Started Guide</a></li>
+      <li><a href="#">Troubleshooting Tips</a></li>
+      <li><a href="#">User Manual</a></li>
+    </ul>
+  </section>
+
+  <section id="faq">
+    <h2>Frequently Asked Questions (FAQ)</h2>
+    <p>Here are some common questions and answers:</p>
+    <ul>
+      <li><strong>How do I reset my password?</strong> <br> To reset your password, click the "Forgot Password" link on the login page.</li>
+      <li><strong>How do I contact support?</strong> <br> You can contact support by emailing support@example.com or using the contact form below.</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>If you need further assistance, feel free to contact us:</p>
+    <form action="/submit" method="POST">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required><br><br>
+
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email" required><br><br>
+
+      <label for="message">Message:</label><br>
+      <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 My App Support Site. All rights reserved.</p>
+    <p><a href="https://github.com/your-username/your-repository-name">GitHub Repository</a></p>
+  </footer>
+
+</body>
+</html>
